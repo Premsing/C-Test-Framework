@@ -1,0 +1,18 @@
+﻿{
+    "testDataSets": [
+        {
+            "login": {
+                "username": "rahulshettyacademy",
+                "password": "learning"
+            },
+            "expectedProducts": [ "iphone X", "Blackberry" ]
+        },
+        {
+            "login": {
+                "username": "rahulshettyacademy",
+                "password": "learning"
+            },
+            "expectedProducts": [ "Samsung Note 8", "Nokia Edge" ]
+        }
+    ]
+}

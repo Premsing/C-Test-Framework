@@ -1,0 +1,7 @@
+﻿{
+    "login": {
+        "username": "rahulshettyacademy",
+        "password": "learning"
+    },
+    "expectedProducts": [ "iphone X", "Blackberry" ]
+}
