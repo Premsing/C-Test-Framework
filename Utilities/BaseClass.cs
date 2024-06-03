@@ -5,19 +5,21 @@ using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using System;
 using System.Configuration;
+using System.Threading;
 
 namespace CSharpFramework.Utilities
 {
     class BaseClass
     {
-        public WebDriver driver;
+        //public WebDriver driver;
+        public ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
         [SetUp]
         public void Setup()
         {
             String browserName = ConfigurationManager.AppSettings["browser"];
             initBrowser(browserName);
-            driver.Manage().Window.Maximize();
-            driver.Url = "https://rahulshettyacademy.com/loginpagePractise/";
+            driver.Value.Manage().Window.Maximize();
+            driver.Value.Url = "https://rahulshettyacademy.com/loginpagePractise/";
         }
 
         public void initBrowser(string browserType)
@@ -26,17 +28,17 @@ namespace CSharpFramework.Utilities
             {
                 case "chrome":
                     new WebDriverManager.DriverConfigs.Impl.ChromeConfig();
-                    driver = new ChromeDriver();
+                    driver.Value = new ChromeDriver();
                     break;
 
                 case "firefox":
                     new WebDriverManager.DriverConfigs.Impl.FirefoxConfig();
-                    driver = new FirefoxDriver();
+                    driver.Value = new FirefoxDriver();
                     break;
 
                 case "edge":
                     new WebDriverManager.DriverConfigs.Impl.EdgeConfig();
-                    driver = new EdgeDriver();
+                    driver.Value = new EdgeDriver();
                     break;
 
                 default:
@@ -46,13 +48,13 @@ namespace CSharpFramework.Utilities
 
         public IWebDriver getDriver()
         {
-            return driver;
+            return driver.Value;
         }
 
             [TearDown]
             public void cleanUp()
             {
-                driver.Quit();
+                driver.Value.Quit();
             }
     }
 }

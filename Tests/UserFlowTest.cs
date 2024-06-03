@@ -8,18 +8,18 @@ namespace SeleniumTestProject
 {
     class E2ETest : BaseClass
     {
-
-        [Test]
-        public void EndToEndFlow()
+        //[Parallelizable(ParallelScope.All)]
+        [Test, TestCaseSource("AddTestData")]
+        public void EndToEndFlow(string username, string password)
         {
-            string username = JsonReader.GetUsername();
-            string password = JsonReader.GetPassword();
+            //string username = JsonReader.GetUsername();
+            //string password = JsonReader.GetPassword();
             string[] expectedProducts = JsonReader.GetExpectedProducts();
 
             LoginPage loginPage = new LoginPage(getDriver());
             ProductPage productPage = loginPage.Login(username, password);
 
-            Waits.SetImplicitWait(driver, TimeSpan.FromSeconds(10));
+            Waits.SetImplicitWait(driver.Value, TimeSpan.FromSeconds(10));
             
 
             foreach (string product in expectedProducts)
@@ -35,12 +35,12 @@ namespace SeleniumTestProject
             checkoutPage.Purchase();
         }
 
-        public static IEnumerable<TestCaseData> TestDataList()
+        public static IEnumerable<TestCaseData> AddTestData()
         {
             yield return new TestCaseData("rahulshettyacademy", "learning");
             yield return new TestCaseData("rahulshettyacademy", "learning");
-            yield return new TestCaseData("rahulshettyacademy", "learning1");
-
+            yield return new TestCaseData("rahulshetty", "learning");
         }
+
     }
 }
